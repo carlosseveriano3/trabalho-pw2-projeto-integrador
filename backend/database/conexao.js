@@ -9,4 +9,9 @@ const client = new pg.Client({
   port: 5432
 });
 
+client.connect()
+  .then(function() {
+    console.log('Banco de Dados conectado...')
+  })
+
   module.exports = client

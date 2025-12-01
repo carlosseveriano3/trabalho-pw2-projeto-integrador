@@ -1,16 +1,19 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const app = express();
 const cors = require('cors');
+const pessoasRouter = require('./routes/pessoas');
 
-const client = require('./database/conexao')
-client.connect();
-
+const app = express();
 app.use(cors());
 app.use(bodyParser.json());
+app.use('/pessoas', pessoasRouter);
 
-app.get('/', (req, res) => {
-  const pessoas = client.query("SELECT * FROM pessoas")
+const client = require('./database/conexao')
+
+// Retorna todas as pessoas da tabela
+// GET /
+app.get('/', function(req, res) {
+  client.query("SELECT * FROM pessoas")
     .then(
       function(ret){
         res.send(ret.rows)
@@ -18,4 +21,4 @@ app.get('/', (req, res) => {
   );
 })
 
-app.listen(3000);
+app.listen(3000, function(){console.log('Servidor conectado...')});
