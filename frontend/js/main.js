@@ -1,3 +1,4 @@
+// GET
 function listandoPessoas() {
   $.ajax({
     url: 'http://localhost:3000',
@@ -10,7 +11,18 @@ function listandoPessoas() {
       $lista.empty();
 
       for (pessoa of data) {
-        $lista.append('<div>' + pessoa.nome + ' | ' + pessoa.idade + ' | ' + pessoa.cidade + ' | ' + pessoa.profissao + ' ' + '<button>' + 'x' + '</button>' + '</div>')
+        $lista.append(
+          '<a id="" href="/pessoas/' + pessoa.id +'">'
+            + pessoa.nome + ' | ' 
+            + pessoa.idade + ' | ' 
+            + pessoa.cidade + ' | ' 
+            + pessoa.profissao + ' ' 
+              + '<button>' 
+                + 'x' 
+              + '</button>' + 
+          '</a>'
+        )
+        
         $lista.append('</br>')
       };
     },
@@ -23,6 +35,47 @@ function listandoPessoas() {
 
 listandoPessoas()
 
+if (location.pathname.endsWith('atualizar.html')) {
+
+  function Pessoa() {
+    console.log('Opa')
+    $.ajax({
+      url: 'http://localhost:3000/pessoas/:id',
+      method: 'GET',
+      dataType: 'json',
+
+      success: function(data) {
+        let $pessoaElemento = $('#pessoa');
+
+        $pessoaElemento.empty();
+
+        for (pessoa of data) {
+          $pessoa.append(
+            '<div>'
+              + pessoa.nome + ' | ' 
+              + pessoa.idade + ' | ' 
+              + pessoa.cidade + ' | ' 
+              + pessoa.profissao + ' ' 
+                + '<button>' 
+                  + 'x' 
+                + '</button>' + 
+            '</div>'
+          )
+          
+          $pessoaElemento.append('</br>')
+        };
+      },
+
+      error: function(xhr, status, error) {
+        console.log(error)
+      }
+    });
+  };
+
+  Pessoa()
+}
+
+//POST
 $('#formularioPessoa').on('submit', function(e) {
   e.preventDefault();
 

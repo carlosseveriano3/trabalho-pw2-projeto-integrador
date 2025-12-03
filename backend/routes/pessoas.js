@@ -1,14 +1,21 @@
 const express = require('express');
 const router = express.Router();
+const path = require('path')
 
 const client = require('../database/conexao');
 
 // Retorna uma pessoa específica
 // GET /pessoas/:id
 router.get('/:id', function(req, res) {
+  res.sendFile(path.join(__dirname, "public", "atualizar.html"))
+  console.log(path.join(__dirname, "public", "atualizar.html"))
+
+  const id = parseInt(req.params.id)
+  console.log(id)
+
   client.query({
     text: 'SELECT * FROM pessoas WHERE id = $1',
-    values: [req.params.id]
+    values: [id]
   })
   .then(function (ret){
     let pessoa = ret.rows[0];
