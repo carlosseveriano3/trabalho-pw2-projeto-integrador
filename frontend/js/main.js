@@ -1,7 +1,8 @@
 // GET
 function listandoPessoas() {
+  console.log('main.js: listando')
   $.ajax({
-    url: 'http://localhost:3000',
+    url: 'http://localhost:3000/pessoas/lista',
     method: 'GET',
     dataType: 'json',
 
@@ -12,7 +13,7 @@ function listandoPessoas() {
 
       for (pessoa of data) {
         $lista.append(
-          '<a id="" href="/pessoas/' + pessoa.id +'">'
+          '<a id="" href="/pessoa-unica">'
             + pessoa.nome + ' | ' 
             + pessoa.idade + ' | ' 
             + pessoa.cidade + ' | ' 
@@ -38,7 +39,7 @@ listandoPessoas()
 if (location.pathname.endsWith('atualizar.html')) {
 
   function Pessoa() {
-    console.log('Opa')
+    console.log('main.js: atualizar.html')
     $.ajax({
       url: 'http://localhost:3000/pessoas/:id',
       method: 'GET',

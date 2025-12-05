@@ -1,16 +1,24 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path')
+// router.use(express.static(path.join(__dirname, "../frontend")));
 
 const client = require('../database/conexao');
+
+// Retorna lista de pessoas
+// GET
+router.get('/lista', function(req, res) {
+  console.log('router: pessoas/lista')
+  client.query("SELECT * FROM pessoas")
+    .then(result => {
+      res.json(result.rows)
+    });
+})
 
 // Retorna uma pessoa específica
 // GET /pessoas/:id
 router.get('/:id', function(req, res) {
-  res.sendFile(path.join(__dirname, "public", "atualizar.html"))
-  console.log(path.join(__dirname, "public", "atualizar.html"))
-
-  const id = parseInt(req.params.id)
+  const id = req.params.id
   console.log(id)
 
   client.query({
