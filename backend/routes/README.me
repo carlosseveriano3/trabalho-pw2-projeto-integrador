@@ -1,0 +1,180 @@
+CRUD de Pessoas (Node.js + Express + PostgreSQL)
+
+API simples para cadastro, listagem, atualização e exclusão de pessoas, com frontend em jQuery consumindo os endpoints Node/Express e dados salvos em PostgreSQL.
+
+Objetivo do projeto
+
+Fornecer uma API básica de CRUD de pessoas com:
+
+- Backend em Node.js + Express
+- Banco de dados PostgreSQL
+- Frontend simples em HTML + jQuery para consumir a API
+
+Configurar conexão com o banco
+No arquivo ./database/conexao.js:
+
+js
+const { Client } = require('pg');
+
+const client = new Client({
+  host: 'localhost',
+  port: 5432,
+  user: 'seu_usuario',
+  password: 'sua_senha',
+  database: 'seu_banco'
+});
+
+client.connect();
+
+Subir o Servidor
+
+node server.js
+Se tudo der certo, vai aparecer no console:
+Servidor conectado...
+A API estará em: http://localhost:3000
+
+O frontend é servido pelo Express, a partir da pasta frontend.
+
+Estrutura do Banco de Dados
+Tabela pessoas
+A API espera uma tabela chamada pessoas com os campos:
+
+id – inteiro, chave primária, auto-incremento
+nome – texto, obrigatório
+idade – inteiro, obrigatório
+cidade – texto, obrigatório
+profissao – texto, obrigatório
+
+Script SQL para criar o banco e a tabela
+sql
+Cria o banco
+CREATE DATABASE pessoas_db;
+
+-- Cria a tabela
+CREATE TABLE pessoas (
+  id SERIAL PRIMARY KEY,
+  nome VARCHAR(255) NOT NULL,
+  idade INTEGER NOT NULL,
+  cidade VARCHAR(255) NOT NULL,
+  profissao VARCHAR(255) NOT NULL
+);
+
+Endpoints da API
+Base URL: http://localhost:3000
+
+As rotas da API estão em routes/pessoas.js e são montadas em /pessoas no server.js.
+
+1. Listar todas as pessoas
+GET /pessoas/lista
+
+[
+  {
+    "id": 1,
+    "nome": "João",
+    "idade": 25,
+    "cidade": "São Paulo",
+    "profissao": "Desenvolvedor"
+  },
+  {
+    "id": 2,
+    "nome": "Maria",
+    "idade": 30,
+    "cidade": "Rio de Janeiro",
+    "profissao": "Designer"
+  }
+]
+
+2. Buscar uma pessoa específica
+GET /pessoas/unico/:id
+
+Exemplo: /pessoas/unico/1
+
+Resposta (200):
+
+{
+  "status": "OK",
+  "nome": "João",
+  "idade": 25,
+  "cidade": "São Paulo",
+  "profissao": "Desenvolvedor"
+}
+
+3. Cadastrar uma nova pessoa
+POST /pessoas/cadastro
+
+Body (JSON):
+
+{
+  "nome": "Ana",
+  "idade": 22,
+  "cidade": "Curitiba",
+  "profissao": "Analista"
+}
+Resposta (200):
+
+{
+  "status": "Pessoa cadastrada",
+  "dadosEnviados": {
+    "nome": "Ana",
+    "idade": 22,
+    "cidade": "Curitiba",
+    "profissao": "Analista"
+  }
+}
+
+4. Atualizar uma pessoa
+PUT /pessoas/atualizar/:id
+
+Exemplo: /pessoas/atualizar/1
+
+Body (JSON):
+
+{
+  "nome": "João Silva",
+  "idade": 26,
+  "cidade": "São Paulo",
+  "profissao": "Desenvolvedor Senior"
+}
+Resposta (200):
+
+{
+  "status": "Atualização efetuada",
+  "dadosAtualizados": null
+}
+
+sql
+UPDATE pessoas
+SET nome = $1, idade = $2, cidade = $3, profissao = $4
+WHERE id = $5
+RETURNING *;
+
+5. Deletar uma pessoa
+DELETE /pessoas/:id
+
+Exemplo: /pessoas/3
+
+Resposta (200):
+
+{
+  "status": "Exclusão realizada",
+  "dadosDeletados": {
+    "id": 3,
+    "nome": "Ana",
+    "idade": 22,
+    "cidade": "Curitiba",
+    "profissao": "Analista"
+  }
+}
+
+Frontend
+O frontend consome esses endpoints usando jQuery (main.js):
+
+Lista pessoas em GET /pessoas/lista
+
+Mostra uma pessoa em /pessoas/:id usando GET /pessoas/unico/:id
+
+Cadastra via formulário usando POST /pessoas/cadastro
+
+Atualiza via formulário usando PUT /pessoas/atualizar/:id
+
+Deleta usando DELETE /pessoas/:id
