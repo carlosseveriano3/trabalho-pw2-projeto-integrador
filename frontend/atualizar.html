@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/style.css">
   <title>Consultando Pessoas</title>
 </head>
 <body>
   <h1>Atualizar informações da pessoa:</h1>
 
-  <div id="atualizarPessoa"></div>
+  <div class="div-atualizar" id="atualizarPessoa"></div>
 
-  <form id="formularioPessoa">
+  <form id="formularioAtualizarPessoa">
     <label>
       Nome:
       <input type="text" name="nome" id="nome">
@@ -35,14 +36,14 @@
     </label>
     <br>
 
-    <button type="submit">Cadastrar</button>
+    <button class="botao-cadastro" type="submit">Atualizar</button>
   </form>
 
   <div id="resultado"></div>
 
-  <a href="index.html">Voltar a tela inicial</a>
+  <a href="../index.html">Voltar a tela inicial</a>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="./js/main.js"></script>
+<script src="/js/main.js"></script>
 </body>
 </html>

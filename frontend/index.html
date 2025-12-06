@@ -3,15 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
   <title>Consultando Pessoas</title>
 </head>
 <body>
   <h1>Consultando pessoas</h1>
 
-  <a href="cadastro.html" id="cadastrar">cadastrar pessoa</a>
+  <a class="a-cadastro" href="cadastro.html" id="cadastrar">cadastrar pessoa</a>
 
   <h2>lista de pessoas</h2>
-  <div id="lista-pessoas"></div>
+  <div class="lista-container" id="lista-pessoas">
+
+    <div class="pessoa-item" data-id="' + pessoa.id + '">
+    <a >
+    </a>
+    <button class="botao-deletar" data-id="' + pessoa.id + '">x</button>
+  </div>
+
+  </div>
 
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="./js/main.js"></script>

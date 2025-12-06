@@ -20,9 +20,15 @@ app.get('/', function(req, res) {
   )
 })
 
-app.get('/pessoa-unica', function(req, res) {
+app.get('/pessoas/:id', function(req, res) {
   res.sendFile(
     path.join(__dirname, "../frontend/atualizar.html")
+  )
+})
+
+app.get('/pessoas/cadastro', function(req, res) {
+  res.sendFile(
+    path.join(__dirname, '../frontend/cadastro.html')
   )
 })
 
